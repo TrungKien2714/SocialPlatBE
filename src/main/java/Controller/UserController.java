@@ -1,4 +1,7 @@
 package Controller;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import Service.UserService;
 import domain.Users;
@@ -9,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private UserController(UserService userService,PasswordEncoder passwordEncoder){
-        this.userService=userService;
-        this.passwordEncoder=passwordEncoder;
-    }
+
     @GetMapping("/user/{id}")
     public ResponseEntity<Users> getUser(@PathVariable Long id){
         Users getUserById=this.userService.getUserById(id);
