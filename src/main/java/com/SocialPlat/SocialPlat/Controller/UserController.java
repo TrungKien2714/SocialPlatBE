@@ -1,10 +1,10 @@
-package Controller;
+package com.SocialPlat.SocialPlat.Controller;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import Service.UserService;
-import domain.Users;
+import com.SocialPlat.SocialPlat.Service.UserService;
+import com.SocialPlat.SocialPlat.domain.Users;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

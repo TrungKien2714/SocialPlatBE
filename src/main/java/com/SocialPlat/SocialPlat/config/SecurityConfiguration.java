@@ -1,4 +1,4 @@
-package config;
+package com.SocialPlat.SocialPlat.config;
 
 import jakarta.servlet.FilterChain;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/user").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
