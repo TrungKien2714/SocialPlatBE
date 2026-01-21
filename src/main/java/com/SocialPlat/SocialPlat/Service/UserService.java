@@ -1,12 +1,10 @@
-package Service;
+package com.SocialPlat.SocialPlat.Service;
 
-import Repository.UserRepositoy;
-import domain.Users;
+import com.SocialPlat.SocialPlat.Repository.UserRepositoy;
+import com.SocialPlat.SocialPlat.domain.Users;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,17 +27,26 @@ public class UserService {
     public void deleteUser(Long id){
         this.userRepository.deleteById(id);
     }
-    public Users handleUpdateUser(Long id,Users input){
-        Optional<Users> getUserById=this.userRepository.findById(id);
-        if(getUserById.isPresent()){
-            Users currentUser=getUserById.get();
+    public Users handleUpdateUser(Long id, Users input){
+        Users currentUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id = " + id));
+
+        if (input.getEmail() != null) {
             currentUser.setEmail(input.getEmail());
-            currentUser.setPassword(input.getPassword());
-            this.userRepository.save(currentUser);
-            return currentUser;
         }
-            return null;
+        if (input.getPassword() != null) {
+            currentUser.setPassword(input.getPassword());
+        }
+        if (input.getRole() != null) {
+            currentUser.setRole(input.getRole());
+        }
+        if (input.getStatus() != null) {
+            currentUser.setStatus(input.getStatus());
+        }
+
+        return userRepository.save(currentUser);
     }
+
     public Users handleFindByEmail(String email){
         return this.userRepository.findByEmail(email);
     }
