@@ -2,6 +2,7 @@ package com.SocialPlat.SocialPlat.Controller;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.SocialPlat.SocialPlat.Service.UserService;
 import com.SocialPlat.SocialPlat.domain.Users;
@@ -45,9 +46,17 @@ public class UserController {
         }
         return ResponseEntity.ok().body(null);
     }
+
     @PutMapping("/user/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users input){
         Users updateUser=this.userService.handleUpdateUser(id, input);
         return ResponseEntity.status(HttpStatus.OK).body(updateUser);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/user/{id}")
+    public ResponseEntity<Users> updateRole (@PathVariable Long id, @RequestBody Users input){
+        Users update= this.userService.handleUpdateRole(id,input.getRole());
+        return ResponseEntity.ok(update);
     }
 }
