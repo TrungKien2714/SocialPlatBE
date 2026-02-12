@@ -29,7 +29,7 @@ public class UserDetailimp implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // ROLE_ADMIN / ROLE_USER
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override

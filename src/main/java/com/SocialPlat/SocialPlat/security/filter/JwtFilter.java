@@ -23,17 +23,34 @@ public class JwtFilter extends OncePerRequestFilter {
         this.userDetailService = userDetailService;
     }
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String header=request.getHeader("Authorization");
-        if(header != null&& header.startsWith("Bearer ")){
-            String token = header.substring(7);
-            String username= jwtUtil.extractUsername(token);
-            UserDetailimp user=(UserDetailimp) userDetailService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(
-                            user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String header = request.getHeader("Authorization");
+
+        // 1. Nếu không có header hoặc không bắt đầu bằng Bearer, cho đi tiếp luôn (để permitAll xử lý)
+        if (header == null || !header.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        try {
+            String token = header.substring(7);
+            String username = jwtUtil.extractUsername(token);
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetailimp user = (UserDetailimp) userDetailService.loadUserByUsername(username);
+
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+        } catch (Exception e) {
+            // Nếu token sai/hết hạn, có thể log lỗi ở đây
+            System.out.println("JWT Error: " + e.getMessage());
+        }
+
         filterChain.doFilter(request, response);
     }
 }
