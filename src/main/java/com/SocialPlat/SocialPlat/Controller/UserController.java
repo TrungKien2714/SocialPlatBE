@@ -1,4 +1,6 @@
 package com.SocialPlat.SocialPlat.Controller;
+import com.SocialPlat.SocialPlat.constant.UserRole;
+import com.SocialPlat.SocialPlat.constant.UserStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,13 +33,16 @@ public class UserController {
         List<Users>getAllUser=this.userService.getAllUsers();
         return ResponseEntity.status(HttpStatus.OK).body(getAllUser);
     }
-    @PostMapping("/user")
-    public ResponseEntity<Users> createUser(@RequestBody Users input){
-        String hashPassword=this.passwordEncoder.encode(input.getPassword());
-        input.setPassword(hashPassword);
-        Users createUser=this.userService.handleCreateUser(input);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
-    }
+//    @PostMapping("/user")
+//    public ResponseEntity<Users> createUser(@RequestBody Users input){
+//        String hashPassword=this.passwordEncoder.encode(input.getPassword());
+//        input.setPassword(hashPassword);
+//        input.setStatus(UserStatus.ACTIVE);
+//        input.setRole(UserRole.USER);
+//        input.setCreated_at(LocalDateTime.now().withNano(0));
+//        Users createUser=this.userService.handleCreateUser(input);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
+//    }
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Users> deleteUser(@PathVariable Long id)throws Exception{
         if(this.userService.getUserById(id)==null){

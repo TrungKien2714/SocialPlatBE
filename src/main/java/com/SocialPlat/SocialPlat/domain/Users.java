@@ -4,6 +4,8 @@ import com.SocialPlat.SocialPlat.constant.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +18,12 @@ public class Users {
     @Column(name = "user_id")
     private Long id;
     private String email;
-    @Column(name="password_hash")
+    @Column(name="password")
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
     @Enumerated(EnumType.STRING)
     private UserStatus status;
-    private String created_at;
+    @Column(name = "created_at")
+    private LocalDateTime created_at;
 }
