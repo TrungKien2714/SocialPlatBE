@@ -30,32 +30,27 @@ public class UserService {
     public void deleteUser(Long id){
         this.userRepository.deleteById(id);
     }
-    public Users handleUpdateUser(Long id, Users input){
-        Users currentUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id = " + id));
-
-        if (input.getEmail() != null) {
-            currentUser.setEmail(input.getEmail());
+    public Users handleChangePassword(String email, String newPassword){
+        Users currentUser = userRepository.findByEmail(email);
+        if (currentUser == null) {
+            throw new RuntimeException("User not found");
         }
-        if (input.getPassword() != null) {
-            currentUser.setPassword(passwordEncoder.encode(((input.getPassword()))));
-        }
-        if (input.getRole() != null) {
-            currentUser.setRole(input.getRole());
-        }
-        if (input.getStatus() != null) {
-            currentUser.setStatus(input.getStatus());
-        }
-
+        currentUser.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(currentUser);
     }
 
     public Users handleFindByEmail(String email){
         return this.userRepository.findByEmail(email);
     }
-    public Users handleUpdateRole(Long id, UserRole role){
-        Users user = this.userRepository.findById(id).orElseThrow(()-> new RuntimeException(("User not found")));
-        user.setRole(role);
-        return this.userRepository.save(user);
+    public Users adminUpdateUser(Long id, Users input){
+        Users currentUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id = " + id));
+        if (input.getRole() != null) {
+            currentUser.setRole(input.getRole());
+        }
+        if (input.getStatus() != null) {
+            currentUser.setStatus(input.getStatus());
+        }
+        return this.userRepository.save(currentUser);
     }
 }

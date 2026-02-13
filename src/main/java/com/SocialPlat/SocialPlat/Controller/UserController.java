@@ -1,6 +1,7 @@
 package com.SocialPlat.SocialPlat.Controller;
 import com.SocialPlat.SocialPlat.constant.UserRole;
 import com.SocialPlat.SocialPlat.constant.UserStatus;
+import com.SocialPlat.SocialPlat.security.dto.ChangePasswordRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -29,7 +30,7 @@ public class UserController {
         Users getUserById=this.userService.getUserById(id);
         return ResponseEntity.ok().body(getUserById);
     }
-    @GetMapping("/user")
+    @GetMapping("/all")
     public ResponseEntity<List<Users>> getAllUser(){
         List<Users>getAllUser=this.userService.getAllUsers();
         return ResponseEntity.status(HttpStatus.OK).body(getAllUser);
@@ -54,16 +55,18 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PutMapping("/profile/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users input){
-        Users updateUser=this.userService.handleUpdateUser(id, input);
-        return ResponseEntity.status(HttpStatus.OK).body(updateUser);
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+        String email = org.springframework.security.core.context.SecurityContextHolder
+                .getContext().getAuthentication().getName();
+        this.userService.handleChangePassword(email, request.newPassword());
+        return ResponseEntity.ok("Password updated successfully");
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/user/{id}")
-    public ResponseEntity<Users> updateRole (@PathVariable Long id, @RequestBody Users input){
-        Users update= this.userService.handleUpdateRole(id,input.getRole());
-        return ResponseEntity.ok(update);
+    @PutMapping("/admin/manage/{id}")
+    public ResponseEntity<Users> adminUpdate(@PathVariable Long id, @RequestBody Users input) {
+        Users updated = this.userService.adminUpdateUser(id, input);
+        return ResponseEntity.ok(updated);
     }
 }
