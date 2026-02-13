@@ -6,22 +6,19 @@ import com.SocialPlat.SocialPlat.constant.UserRole;
 import com.SocialPlat.SocialPlat.constant.UserStatus;
 import com.SocialPlat.SocialPlat.domain.Users;
 import com.SocialPlat.SocialPlat.security.config.SecurityConfiguration;
-import com.SocialPlat.SocialPlat.security.dto.LoginRequest;
-import com.SocialPlat.SocialPlat.security.dto.LoginResponse;
-import com.SocialPlat.SocialPlat.security.dto.RegisterRequest;
-import com.SocialPlat.SocialPlat.security.dto.RegisterResponse;
+import com.SocialPlat.SocialPlat.security.dto.*;
 import com.SocialPlat.SocialPlat.security.service.CustomerUserDetailService;
 import com.SocialPlat.SocialPlat.security.user.UserDetailimp;
 import com.SocialPlat.SocialPlat.security.util.JWTutil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -59,5 +56,16 @@ public class AuthController {
         newUser.setCreated_at(LocalDateTime.now().withNano(0));
         userService.handleCreateUser(newUser);
         return new RegisterResponse("User registered successfully", newUser.getEmail());
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getMe(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Users user = userRepositoy.findByEmail(email);
+        if(user==null){
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        UserResponse userResponse= new UserResponse(user.getId(),user.getEmail(),user.getRole().name());
+        return ResponseEntity.ok(userResponse);
     }
 }

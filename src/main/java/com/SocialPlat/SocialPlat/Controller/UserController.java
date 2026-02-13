@@ -19,11 +19,12 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@RequestMapping("user")
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Users> getUser(@PathVariable Long id){
         Users getUserById=this.userService.getUserById(id);
         return ResponseEntity.ok().body(getUserById);
@@ -43,7 +44,7 @@ public class UserController {
 //        Users createUser=this.userService.handleCreateUser(input);
 //        return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
 //    }
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Users> deleteUser(@PathVariable Long id)throws Exception{
         if(this.userService.getUserById(id)==null){
             throw new Exception("User not found");
@@ -53,7 +54,7 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/profile/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users input){
         Users updateUser=this.userService.handleUpdateUser(id, input);
         return ResponseEntity.status(HttpStatus.OK).body(updateUser);
