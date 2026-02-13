@@ -49,20 +49,7 @@ git clone https://github.com/TrungKien2714/SocialPlat.git
 cd SocialPlat
 ```
 
-### 2. Database Setup
-Create a MySQL database:
-```sql
-CREATE DATABASE socialplat;
-```
-
-Configure database connection in `src/main/resources/application.properties`:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/socialplat
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-```
-
-### 3. Build and Run Backend
+### 2. Build and Run Backend
 Using Gradle wrapper:
 ```bash
 # On Unix/Linux/Mac
@@ -78,7 +65,7 @@ Or build and run the JAR:
 java -jar build/libs/SocialPlat-0.0.1-SNAPSHOT.jar
 ```
 
-### 4. Setup Frontend
+### 3. Setup Frontend
 ```bash
 # Navigate to frontend directory (if separated)
 cd frontend
