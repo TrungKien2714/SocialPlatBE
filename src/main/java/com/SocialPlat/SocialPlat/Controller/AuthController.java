@@ -53,7 +53,7 @@ public class AuthController {
         newUser.setPassword(this.passwordEncoder.encode(registerRequest.password()));
         newUser.setRole(UserRole.USER);
         newUser.setStatus(UserStatus.ACTIVE);
-        newUser.setCreated_at(LocalDateTime.now().withNano(0));
+        newUser.setCreatedAt(LocalDateTime.now().withNano(0));
         userService.handleCreateUser(newUser);
         return new RegisterResponse("User registered successfully", newUser.getEmail());
     }

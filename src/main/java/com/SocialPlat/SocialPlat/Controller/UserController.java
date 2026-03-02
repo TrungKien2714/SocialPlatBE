@@ -1,7 +1,9 @@
 package com.SocialPlat.SocialPlat.Controller;
 import com.SocialPlat.SocialPlat.constant.UserRole;
 import com.SocialPlat.SocialPlat.constant.UserStatus;
+import com.SocialPlat.SocialPlat.security.dto.AdminUpdateUserRequest;
 import com.SocialPlat.SocialPlat.security.dto.ChangePasswordRequest;
+import com.SocialPlat.SocialPlat.security.dto.UserProfileResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -65,8 +67,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/manage/{id}")
-    public ResponseEntity<Users> adminUpdate(@PathVariable Long id, @RequestBody Users input) {
-        Users updated = this.userService.adminUpdateUser(id, input);
+    public ResponseEntity<UserProfileResponse> adminUpdate(@PathVariable Long id, @RequestBody AdminUpdateUserRequest input) {
+        UserProfileResponse updated = this.userService.adminUpdateUser(id, input);
         return ResponseEntity.ok(updated);
     }
 }
