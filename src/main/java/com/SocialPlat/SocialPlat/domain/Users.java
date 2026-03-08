@@ -33,7 +33,7 @@ public class Users {
     private String username;
 
     @JsonIgnore
-    @Column(nullable = false, length = 255)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
     @Column(name = "full_name", length = 100)
