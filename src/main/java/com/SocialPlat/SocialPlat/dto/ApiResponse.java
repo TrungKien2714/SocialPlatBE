@@ -48,4 +48,31 @@ public class ApiResponse<T> {
                 .timestamp(LocalDateTime.now())
                 .build();
     }
+
+    //Error response
+    public static<T> ApiResponse<T> error(String message){
+        return ApiResponse.<T>builder()
+                .success(false)
+                .message(message)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    public static<T> ApiResponse<T> error (String message,String errorCode){
+        return  ApiResponse.<T>builder()
+                .success(false)
+                .message(message)
+                .errorCode(errorCode)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+    public static<T> ApiResponse<T> error(String message,String errorCode, String path){
+        return ApiResponse.<T>builder()
+                .success(false)
+                .message(message)
+                .errorCode(errorCode)
+                .path(path)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
 }
