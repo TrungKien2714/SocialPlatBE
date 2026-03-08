@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +48,7 @@ public class AuthController {
         }
         Users newUser=new Users();
         newUser.setEmail(registerRequest.email());
+        newUser.setUsername(registerRequest.username());
         newUser.setPassword(this.passwordEncoder.encode(registerRequest.password()));
         newUser.setRole(UserRole.USER);
         newUser.setStatus(UserStatus.ACTIVE);
@@ -58,8 +58,11 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> getMe(){
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+    public ResponseEntity<UserResponse> getMe(Authentication authentication){
+        if(authentication == null || !authentication.isAuthenticated()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String email = authentication.getName();
         Users user = userRepositoy.findByEmail(email);
         if(user==null){
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();

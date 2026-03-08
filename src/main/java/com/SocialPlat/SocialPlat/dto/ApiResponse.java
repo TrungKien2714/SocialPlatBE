@@ -75,4 +75,24 @@ public class ApiResponse<T> {
                 .timestamp(LocalDateTime.now())
                 .build();
     }
+
+    //Pagination response
+    public static<T> ApiResponse<T> successWithPagination(String message,T data, PaginationMeta pagination){
+        return ApiResponse.<T>builder()
+                .success(true)
+                .message(message)
+                .data(data)
+                .pagination(pagination)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    public static<T> ApiResponse<T> successWithPagination(T data, PaginationMeta pagination){
+        return ApiResponse.<T>builder()
+                .success(true)
+                .data(data)
+                .pagination(pagination)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
 }
