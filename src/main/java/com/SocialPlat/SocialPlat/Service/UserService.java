@@ -1,6 +1,6 @@
 package com.SocialPlat.SocialPlat.Service;
 
-import com.SocialPlat.SocialPlat.Repository.UserRepositoy;
+import com.SocialPlat.SocialPlat.Repository.UserRepository;
 import com.SocialPlat.SocialPlat.constant.UserStatus;
 import com.SocialPlat.SocialPlat.domain.Users;
 import com.SocialPlat.SocialPlat.exception.ResourceNotFoundException;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    private final UserRepositoy userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
