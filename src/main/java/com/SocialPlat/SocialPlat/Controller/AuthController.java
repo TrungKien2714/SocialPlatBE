@@ -1,10 +1,10 @@
 package com.SocialPlat.SocialPlat.Controller;
 
-import com.SocialPlat.SocialPlat.Repository.UserRepositoy;
+import com.SocialPlat.SocialPlat.Repository.UserRepository;
 import com.SocialPlat.SocialPlat.Service.UserService;
 import com.SocialPlat.SocialPlat.constant.UserRole;
 import com.SocialPlat.SocialPlat.constant.UserStatus;
-import com.SocialPlat.SocialPlat.domain.Users;
+import com.SocialPlat.SocialPlat.Entity.Users;
 import com.SocialPlat.SocialPlat.dto.*;
 import com.SocialPlat.SocialPlat.security.service.CustomerUserDetailService;
 import com.SocialPlat.SocialPlat.security.user.UserDetailimp;
@@ -29,7 +29,7 @@ public class AuthController {
     private final CustomerUserDetailService userDetailService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final UserRepositoy userRepositoy;
+    private final UserRepository userRepositoy;
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
         Authentication auth= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

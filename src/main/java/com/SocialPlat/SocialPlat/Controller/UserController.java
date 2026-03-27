@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.SocialPlat.SocialPlat.Service.UserService;
-import com.SocialPlat.SocialPlat.domain.Users;
+import com.SocialPlat.SocialPlat.Entity.Users;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.SocialPlat.SocialPlat.Repository;
 
 import com.SocialPlat.SocialPlat.constant.UserStatus;
-import com.SocialPlat.SocialPlat.domain.Users;
+import com.SocialPlat.SocialPlat.Entity.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepositoy extends JpaRepository<Users,Long> {
+public interface UserRepository extends JpaRepository<Users,Long> {
     Users findByEmail(String email);
 
     boolean existsByEmail(String email);
