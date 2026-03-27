@@ -1,4 +1,4 @@
-package com.SocialPlat.SocialPlat.domain;
+package com.SocialPlat.SocialPlat.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,25 +10,24 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "likes")
-public class Like {
+@Table(name = "friends")
+public class Friend {
     @EmbeddedId
-    private LikeId id;
+    private FriendId id;
 
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @MapsId("postId")
+    @MapsId("friendId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    @JoinColumn(name = "friend_id", nullable = false)
+    private Users friend;
 
-    @ColumnDefault("'LIKE'")
     @Lob
-    @Column(name = "reaction")
-    private String reaction;
+    @Column(name = "status")
+    private String status;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")

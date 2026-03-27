@@ -2,7 +2,7 @@ package com.SocialPlat.SocialPlat.Service;
 
 import com.SocialPlat.SocialPlat.Repository.UserRepository;
 import com.SocialPlat.SocialPlat.constant.UserStatus;
-import com.SocialPlat.SocialPlat.domain.Users;
+import com.SocialPlat.SocialPlat.Entity.Users;
 import com.SocialPlat.SocialPlat.exception.ResourceNotFoundException;
 import com.SocialPlat.SocialPlat.dto.UpdateProfileRequest;
 import com.SocialPlat.SocialPlat.dto.UserProfileResponse;
@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

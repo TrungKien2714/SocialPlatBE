@@ -1,4 +1,4 @@
-package com.SocialPlat.SocialPlat.domain;
+package com.SocialPlat.SocialPlat.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
